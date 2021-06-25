@@ -5,15 +5,15 @@ using Niam.XRM.Framework.Plugin;
 
 namespace Insurgo.Custom.Api
 {
-    public class PluginGetEnvironmentVariable : PluginBase, IPlugin
+    public class PluginGetTeamsEmail : PluginBase, IPlugin
     {
-        public PluginGetEnvironmentVariable(string unsecure, string secure) : base(unsecure, secure)
+        public PluginGetTeamsEmail(string unsecure, string secure) : base(unsecure, secure)
         {
         }
 
         protected override void ExecuteCrmPlugin(IPluginContext<Entity> context)
         {
-            new GetEnvironmentVariable(context).Execute();
+            new GetTeamsEmail(context).Execute();
         }
     }
 }

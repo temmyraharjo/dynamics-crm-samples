@@ -15,7 +15,7 @@ namespace Insurgo.Custom.Api.Tests.Business
         {
             var environmentVariable = new EnvironmentVariableDefinition { Id = Guid.NewGuid() }.
                 Set(e => e.SchemaName, "TEST").
-                Set(e => e.DefaultValue, "VALUE").ToEntity<Entity>();
+                Set(e => e.DefaultValue, "VALUE");
 
             var testContext = new TestEvent<Entity>(environmentVariable);
             testContext.PluginExecutionContext.InputParameters[Api.Business.GetEnvironmentVariable.InputParameter] = "TEST";
@@ -28,16 +28,14 @@ namespace Insurgo.Custom.Api.Tests.Business
         [TestMethod]
         public void GetEnvironmentVariable_EnvironmentVariableValue_ShouldValid()
         {
-            var environmentVariable = new EnvironmentVariableDefinition { Id = Guid.NewGuid() }
+            var environmentVariable = new EnvironmentVariableDefinition {Id = Guid.NewGuid()}
                 .Set(e => e.SchemaName, "TEST")
-                .Set(e => e.DefaultValue, "VALUE")
-                .ToEntity<Entity>();
+                .Set(e => e.DefaultValue, "VALUE");
 
             var environmentValue = new EnvironmentVariableValue { Id = Guid.NewGuid() }
                 .Set(e => e.EnvironmentVariableDefinitionId, environmentVariable.ToEntityReference())
                 .Set(e => e.SchemaName, "CHILD")
-                .Set(e => e.Value, "CHILD-VALUE")
-                .ToEntity<Entity>();
+                .Set(e => e.Value, "CHILD-VALUE");
 
             var testContext = new TestEvent<Entity>(environmentVariable, environmentValue);
             testContext.PluginExecutionContext.InputParameters[Api.Business.GetEnvironmentVariable.InputParameter] = "TEST";

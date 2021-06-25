@@ -78,8 +78,8 @@
     <Reference Include="Niam.XRM.Framework, Version=9.0.0.1, Culture=neutral, PublicKeyToken=95ffda3bd4333fd3, processorArchitecture=MSIL">
       <HintPath>..\packages\Niam.XRM.Framework.9.0.0.2\lib\net462\Niam.XRM.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Niam.XRM.Framework.TestHelper, Version=9.0.0.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Niam.XRM.Framework.TestHelper.9.0.0.2\lib\net462\Niam.XRM.Framework.TestHelper.dll</HintPath>
+    <Reference Include="Niam.XRM.Framework.TestHelper, Version=9.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Niam.XRM.Framework.TestHelper.9.0.0.3\lib\net462\Niam.XRM.Framework.TestHelper.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\GetEnvironmentVariableTests.cs" />
+    <Compile Include="Business\GetTeamsEmailTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
