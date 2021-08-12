@@ -21,7 +21,7 @@ namespace CrmDeployment
 
             if (args.Any() && args.Contains("WebResource"))
             {
-                new UpsertWebResources(client.OrganizationServiceProxy, config).Execute();
+                new UpsertWebResources(client, config).Execute();
 
                 var publishAll = new PublishAllXmlRequest();
                 client.Execute(publishAll);
@@ -31,7 +31,7 @@ namespace CrmDeployment
             else if (args.Any() && args.Contains("Plugin"))
             {
                 var filePath = string.Join(" ", args.Skip(1)).Trim();
-                new UpdatePlugin(client.OrganizationServiceProxy, filePath).Execute();
+                new UpdatePlugin(client, filePath).Execute();
             }
 
             Console.WriteLine("Done Deployment..");
