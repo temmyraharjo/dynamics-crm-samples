@@ -12,9 +12,9 @@
   <Import Project="$(PowerAppsTargetsPath)\Microsoft.PowerApps.VisualStudio.Plugin.props" Condition="Exists('$(PowerAppsTargetsPath)\Microsoft.PowerApps.VisualStudio.Plugin.props')" />
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies" Version="9.0.2.*" />
+    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies" Version="9.0.2.41" />
     <PackageReference Include="Microsoft.PowerApps.MSBuild.Plugin" Version="1.*" />
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
     <PackageReference Include="Niam.XRM.Framework" Version="9.0.0.2" />
   </ItemGroup>
 

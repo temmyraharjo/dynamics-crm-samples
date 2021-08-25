@@ -2,6 +2,7 @@
 using Microsoft.Xrm.Sdk;
 using Niam.XRM.Framework.Interfaces.Plugin;
 using Niam.XRM.Framework.Plugin;
+using System;
 
 namespace Insurgo.Custom.Api
 {

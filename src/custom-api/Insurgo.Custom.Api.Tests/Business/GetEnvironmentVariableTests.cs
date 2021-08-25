@@ -7,6 +7,7 @@ using System;
 
 namespace Insurgo.Custom.Api.Tests.Business
 {
+
     [TestClass]
     public class GetEnvironmentVariableTests
     {
@@ -28,7 +29,7 @@ namespace Insurgo.Custom.Api.Tests.Business
         [TestMethod]
         public void GetEnvironmentVariable_EnvironmentVariableValue_ShouldValid()
         {
-            var environmentVariable = new EnvironmentVariableDefinition {Id = Guid.NewGuid()}
+            var environmentVariable = new EnvironmentVariableDefinition { Id = Guid.NewGuid() }
                 .Set(e => e.SchemaName, "TEST")
                 .Set(e => e.DefaultValue, "VALUE");
 

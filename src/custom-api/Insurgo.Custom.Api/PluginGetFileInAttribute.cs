@@ -6,15 +6,15 @@ using System;
 
 namespace Insurgo.Custom.Api
 {
-    public class PluginGetTeamsEmail : PluginBase, IPlugin
+    public class PluginGetFileInAttribute : PluginBase, IPlugin
     {
-        public PluginGetTeamsEmail(string unsecure, string secure) : base(unsecure, secure)
+        public PluginGetFileInAttribute(string unsecure, string secure) : base(unsecure, secure)
         {
         }
 
         protected override void ExecuteCrmPlugin(IPluginContext<Entity> context)
         {
-            new GetTeamsEmail(context).Execute();
+            new GetFileInAttribute(context).Execute();
         }
     }
 }
