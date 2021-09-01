@@ -1,8 +1,11 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 using Niam.XRM.Framework.Interfaces.Plugin;
 using Niam.XRM.Framework.Plugin;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Insurgo.Custom.Api.Business
 {
@@ -37,21 +40,28 @@ namespace Insurgo.Custom.Api.Business
             var entityId = new Guid(Context.PluginExecutionContext.InputParameters[InputEntityGuid].ToString());
             var attributeName = Context.PluginExecutionContext.InputParameters[InputFileAttributeName].ToString();
 
-            try
-            {
-                var initializeFile = new InitializeFileBlocksDownloadRequest
-                {
-                    FileAttributeName = "new_file",
-                    Target = new EntityReference(entityLogicalName, entityId)
-                };
+            var fileAttributes = GetFileAttributes(attributeName).ToArray();
 
-                return (InitializeFileBlocksDownloadResponse)Service.Execute(initializeFile);
-            }
-            catch (Exception ex)
+            var data = Service.Retrieve(entityLogicalName, entityId, new ColumnSet(true));
+
+            if (!fileAttributes.Any(expectedAttribute => data.Contains(expectedAttribute)))
             {
-                if (ex.Message.Contains("No file attachment found for attribute:")) return new InitializeFileBlocksDownloadResponse();
-                throw;
+                return new InitializeFileBlocksDownloadResponse();
             }
+
+            var initializeFile = new InitializeFileBlocksDownloadRequest
+            {
+                FileAttributeName = attributeName,
+                Target = new EntityReference(entityLogicalName, entityId)
+            };
+
+            return (InitializeFileBlocksDownloadResponse)Service.Execute(initializeFile);
+        }
+
+        private IEnumerable<string> GetFileAttributes(string attributeName)
+        {
+            yield return attributeName; // For File
+            yield return $"{attributeName}id"; // For Image
         }
     }
 }

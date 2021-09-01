@@ -1,6 +1,8 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
+using Niam.XRM.Framework;
 using Niam.XRM.Framework.Interfaces.Plugin;
 using NSubstitute;
 using System;
@@ -28,10 +30,9 @@ namespace Insurgo.Custom.Api.Tests.Business
             transactionContext.PluginExecutionContext.Returns(pluginContext);
 
             var organizationService = Substitute.For<IOrganizationService>();
-            organizationService.Execute(Arg.Any<InitializeFileBlocksDownloadRequest>()).Returns(x =>
-            {
-                throw new Exception("No file attachment found for attribute: new_file EntityId: 2e19aa2f-5505-ec11-b6e6-00224816ca54.");
-            });
+            organizationService.Retrieve(Arg.Any<string>(), Arg.Any<Guid>(), 
+                Arg.Any<ColumnSet>()).Returns(new Entity());
+
             transactionContext.Service.Returns(organizationService);
 
             new Api.Business.GetFileInAttribute(transactionContext).Execute();
@@ -58,6 +59,10 @@ namespace Insurgo.Custom.Api.Tests.Business
             transactionContext.PluginExecutionContext.Returns(pluginContext);
 
             var organizationService = Substitute.For<IOrganizationService>();
+
+            organizationService.Retrieve(Arg.Any<string>(), Arg.Any<Guid>(),
+               Arg.Any<ColumnSet>()).Returns(new Entity().Set("new_file", "FILE001"));
+
             organizationService.Execute(Arg.Any<InitializeFileBlocksDownloadRequest>()).Returns(x =>
             {
                 return new InitializeFileBlocksDownloadResponse
