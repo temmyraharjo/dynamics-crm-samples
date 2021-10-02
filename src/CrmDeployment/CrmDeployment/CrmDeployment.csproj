@@ -92,7 +92,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\SolutionsExporter.cs" />
     <Compile Include="Business\UpdatePlugin.cs" />
+    <Compile Include="Business\UpdatePlugins.cs" />
     <Compile Include="Business\UpsertWebResources.cs" />
     <Compile Include="ConfigModel.cs" />
     <Compile Include="Entities.cs" />
