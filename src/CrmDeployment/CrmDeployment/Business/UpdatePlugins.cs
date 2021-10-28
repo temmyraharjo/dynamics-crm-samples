@@ -55,7 +55,7 @@ namespace CrmDeployment.Business
 
         private IEnumerable<string> GetPluginFilePaths()
         {
-            var files = Directory.GetFiles(_directory, "*.dll");
+            var files = Directory.GetFiles(_directory, "*.dll", SearchOption.AllDirectories);
             foreach (var file in files)
             {
                 var filtered = Assembly.LoadFile(file).GetTypes()

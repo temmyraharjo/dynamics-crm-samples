@@ -3,7 +3,6 @@ using Microsoft.Xrm.Sdk.Query;
 using Niam.XRM.Framework;
 using Niam.XRM.Framework.Data;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -26,11 +25,14 @@ namespace CrmDeployment.Business
         {
             var solutions = GetSolutions();
 
-            var solutionDirectory = _directory + "\\Export Solutions";
-            if (!Directory.Exists(solutionDirectory))
+            if (!solutions.Any()) Console.WriteLine("No solutions found..");
+
+            Console.WriteLine($"Managed: {_isManaged}");
+
+            if (!Directory.Exists(_directory))
             {
-                Console.WriteLine($"Create directory {solutionDirectory}..");
-                Directory.CreateDirectory(solutionDirectory);
+                Console.WriteLine($"Create directory {_directory}..");
+                Directory.CreateDirectory(_directory);
             }
 
             foreach (var solution in solutions)
@@ -49,7 +51,7 @@ namespace CrmDeployment.Business
 
                 Console.WriteLine($"Run export solution {solutionName} start: {start} end: {end} total minutes: {(end - start).TotalMinutes}..");
 
-                var filePath = solutionDirectory + "\\" + solutionName + (_isManaged ? "_Managed" : "_Unmanaged") + ".zip";
+                var filePath = _directory + "\\" + solutionName + (_isManaged ? "_Managed" : "_Unmanaged") + ".zip";
                 File.WriteAllBytes(filePath, result.ExportSolutionFile);
                 Console.WriteLine($"Save solution at {filePath}");
             }

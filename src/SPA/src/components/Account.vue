@@ -48,7 +48,7 @@ export default class Login extends Vue {
     if (!store.state.accessToken) return;
 
     fetch(
-      "https://your_crm_org.crm5.dynamics.com/api/data/v9.1/accounts?$select=name,websiteurl&$top=10",
+      "https://org2c8fdee0.crm5.dynamics.com/api/data/v9.1/accounts?$select=name,websiteurl&$top=10",
       {
         method: "get",
         headers: new Headers({

@@ -30,10 +30,10 @@ export default class Login extends Vue {
   getMsalConfig(): Configuration {
     const msalConfig: Configuration = {
       auth: {
-        clientId: "your_client_id",
+        clientId: "5a9ffc06-fec4-4fee-b41d-a299585f23cb",
         redirectUri: "http://localhost:8080/",
         authority:
-          "https://login.microsoftonline.com/your_ad_domain.onmicrosoft.com",
+          "https://login.microsoftonline.com/insurgodevu.onmicrosoft.com",
       },
       cache: {
         cacheLocation: "sessionStorage",
@@ -60,7 +60,7 @@ export default class Login extends Vue {
           store.state.homeAccountId
         );
         return userAgentApp.acquireTokenSilent({
-          scopes: ["https://your_crm_org.crm5.dynamics.com/.default"],
+          scopes: ["https://org2c8fdee0.crm5.dynamics.com/.default"],
           account: account || undefined,
         });
       })

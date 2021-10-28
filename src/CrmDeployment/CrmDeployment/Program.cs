@@ -1,10 +1,8 @@
-﻿using CrmDeployment.Business;
+﻿using CommandLine;
+using CrmDeployment.Business;
 using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Tooling.Connector;
-using Newtonsoft.Json;
 using System;
-using System.IO;
-using System.Linq;
 
 namespace CrmDeployment
 {
@@ -12,54 +10,52 @@ namespace CrmDeployment
     {
         static void Main(string[] args)
         {
-            if (!args.Any())
-            {
-                Console.WriteLine("No arguments received..");
-                return;
-            }
+            Parser.Default.ParseArguments<CommandLineOptions>(args)
+                .WithParsed(option => Run(option));
+            Console.Read();
+        }
 
-            var jsonString = File.ReadAllText($"{AppDomain.CurrentDomain.BaseDirectory}/config.json");
-            var config = JsonConvert.DeserializeObject<ConfigModel>(jsonString);
-
-            var client = new CrmServiceClient(config.ConnectionString);
+        static void Run(CommandLineOptions option)
+        {
+            var client = new CrmServiceClient(option.ConnectionString);
 
             Console.WriteLine($"Connected to {client.ConnectedOrgFriendlyName}");
 
-            if (args[0] == ("WebResource"))
+            switch (option.Type)
             {
-                new UpsertWebResources(client, config).Execute();
+                case "Update-WebResource":
+                    {
+                        new UpsertWebResources(client, option.Directory).Execute();
 
-                var publishAll = new PublishAllXmlRequest();
-                client.Execute(publishAll);
+                        var publishAll = new PublishAllXmlRequest();
+                        client.Execute(publishAll);
 
-                Console.WriteLine("Publish All finished");
+                        Console.WriteLine("Publish All finished");
+                        break;
+                    }
+
+                case "Update-Plugin":
+                    new UpdatePlugin(client, option.FilePath).Execute();
+                    break;
+                case "Update-Plugins":
+                    new UpdatePlugins(client, option.Directory).Execute();
+                    break;
+                case "Export-Solutions":
+                    {
+                        var publishAll = new PublishAllXmlRequest();
+                        client.Execute(publishAll);
+
+                        Console.WriteLine("Publish All finished");
+
+                        new SolutionsExporter(client, option.Directory, option.IsManaged.GetValueOrDefault()).Execute();
+                        break;
+                    }
+                case "Import-Solutions":
+                    {
+                        new SolutionsImporter(client, option.Directory, option.IsToday.GetValueOrDefault()).Execute();
+                        break;
+                    }
             }
-            else if (args[0] == "Plugin")
-            {
-                var filePath = string.Join(" ", args.Skip(1)).Trim();
-                new UpdatePlugin(client, filePath).Execute();
-            }
-            else if (args[0] == "Plugins")
-            {
-                var directory = string.Join(" ", args.Skip(1)).Trim();
-                new UpdatePlugins(client, directory).Execute();
-            }
-            else if (args[0] == "Solutions")
-            {
-                var publishAll = new PublishAllXmlRequest();
-                client.Execute(publishAll);
-
-                Console.WriteLine("Publish All finished");
-
-                var isManaged = bool.Parse(args[1]);
-                var directoryText = string.Join("", args.Skip(2))
-                    .Trim();
-
-
-                new SolutionsExporter(client, directoryText, isManaged).Execute();
-            }
-
-            Console.WriteLine("Done..");
         }
     }
 }

@@ -12,17 +12,17 @@ namespace CrmDeployment.Business
     public class UpsertWebResources
     {
         private readonly IOrganizationService _service;
-        private readonly ConfigModel _config;
+        private readonly string _directory;
 
-        public UpsertWebResources(IOrganizationService service, ConfigModel config)
+        public UpsertWebResources(IOrganizationService service, string directory)
         {
             _service = service;
-            _config = config;
+            _directory = directory;
         }
 
         public void Execute()
         {
-            var files = Directory.GetFiles(_config.WebResourceFilePath).Where(e => e.ToLower().EndsWith(".js"))
+            var files = Directory.GetFiles(_directory).Where(e => e.ToLower().EndsWith(".js"))
                 .Select(e => new { FilePath = e, Name = Path.GetFileName(e) }).ToArray();
             if (!files.Any()) return;
 
