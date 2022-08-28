@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Insurgo.Custom.Api.Business
 {
-    public class GetEnvironmentVariable : OperationBase<Entity>
+    public class GetEnvironmentVariable : OperationBase
     {
         public const string InputParameter = "EnvironmentVariableName";
         public const string OutputParameter = "Result";

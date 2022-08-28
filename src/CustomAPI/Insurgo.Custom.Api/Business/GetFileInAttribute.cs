@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Insurgo.Custom.Api.Business
 {
-    public class GetFileInAttribute : OperationBase<Entity>
+    public class GetFileInAttribute : OperationBase
     {
         public const string InputEntityLogicalName = "EntityLogicalName";
         public const string InputEntityGuid = "EntityGuid";

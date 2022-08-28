@@ -18,7 +18,7 @@ namespace Insurgo.Custom.Api.Tests.Business
                 Set(e => e.SchemaName, "TEST").
                 Set(e => e.DefaultValue, "VALUE");
 
-            var testContext = new TestEvent<Entity>(environmentVariable);
+            var testContext = new TestEvent(environmentVariable);
             testContext.PluginExecutionContext.InputParameters[Api.Business.GetEnvironmentVariable.InputParameter] = "TEST";
 
             testContext.CreateEventCommand<Api.Business.GetEnvironmentVariable>(null);
@@ -38,7 +38,7 @@ namespace Insurgo.Custom.Api.Tests.Business
                 .Set(e => e.SchemaName, "CHILD")
                 .Set(e => e.Value, "CHILD-VALUE");
 
-            var testContext = new TestEvent<Entity>(environmentVariable, environmentValue);
+            var testContext = new TestEvent(environmentVariable, environmentValue);
             testContext.PluginExecutionContext.InputParameters[Api.Business.GetEnvironmentVariable.InputParameter] = "TEST";
 
             testContext.CreateEventCommand<Api.Business.GetEnvironmentVariable>(null);
