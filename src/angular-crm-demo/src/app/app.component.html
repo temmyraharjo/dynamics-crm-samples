@@ -1,0 +1,30 @@
+<div class="d-flex align-items-center justify-content-center vh-100">
+  <div class="container">
+    <h1>Calculate Table</h1>
+    <hr>
+    <div class="table-responsive-sm">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Start</th>
+          <th scope="col">End</th>
+          <th scope="col">Qty</th>
+          <th scope="col">Unit Price</th>
+          <th scope="col">Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let row of data">
+          <th>{{ row.name }}</th>
+          <td>{{ row.start }}</td>
+          <td>{{ row.end }}</td>
+          <td>{{ row.qty}}</td>
+          <td>{{ row.unitPrice}}</td>
+          <td>{{ row.total}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
