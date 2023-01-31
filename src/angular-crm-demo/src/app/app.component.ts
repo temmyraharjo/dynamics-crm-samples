@@ -10,7 +10,7 @@ export class AppComponent {
   data: {start: Date, end: Date, name: string, qty: number, unitPrice:  number, total: number}[] = [];
   constructor(private appService: AppService) { }
   ngOnInit() {
-    let context = Xrm.Utility.getGlobalContext();
+    const context = Xrm.Utility.getGlobalContext();
     console.log(`Logged in user: ${context.userSettings.userName}..`);
     const id = this.getParameterByName("data") || '';
     console.log(`Params detected ${id}..`);
@@ -22,7 +22,7 @@ export class AppComponent {
 
   getParameterByName(name: string, url = window.location.href) {
     name = name.replace(/[\[\]]/g, '\\$&');
-    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
       results = regex.exec(url);
     if (!results) return null;
     if (!results[2]) return '';
