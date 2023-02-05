@@ -1,0 +1,36 @@
+{
+  "webresources": [
+    {
+      "profile": "default,debug",
+      "root": "dist\\angular-crm-demo\\",
+      "solution": "AngularBlog",
+      "files": [
+        {
+          "uniquename": "dev_/angular-crm-demo/index.html",
+          "file": "index.html",
+          "description": ""
+        },
+        {
+          "uniquename": "dev_/angular-crm-demo/main.js",
+          "file": "main.js",
+          "description": ""
+        },
+        {
+          "uniquename": "dev_/angular-crm-demo/polyfills.js",
+          "file": "polyfills.js",
+          "description": ""
+        },
+        {
+          "uniquename": "dev_/angular-crm-demo/runtime.js",
+          "file": "runtime.js",
+          "description": ""
+        },
+        {
+          "uniquename": "dev_/angular-crm-demo/styles.css",
+          "file": "styles.css",
+          "description": ""
+        }
+      ]
+    }
+  ]
+}

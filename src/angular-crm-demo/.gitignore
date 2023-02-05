@@ -1,1 +1,4 @@
 node_modules
+.angular
+spkl/Log*.txt
+dist/angular-crm-demo
