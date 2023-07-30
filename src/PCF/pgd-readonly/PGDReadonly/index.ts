@@ -4,7 +4,7 @@ import { cellEditorOverrides } from "./customizers/CellEditorOverrides";
 import { PAOneGridCustomizer, SettingModel } from "./types";
 import * as React from "react";
 
-let stateData: { Settings: SettingModel[], entity: string } = { Settings: [], entity: '' };
+const stateData: { Setting: SettingModel, entity: string} = { Setting: { entity: '', attributes: [] }, entity: ''};
 export class PGDReadonly implements ComponentFramework.ReactControl<IInputs, IOutputs> {
     /**
      * Empty constructor.
@@ -18,23 +18,23 @@ export class PGDReadonly implements ComponentFramework.ReactControl<IInputs, IOu
      * @param _notifyOutputChanged A callback method to alert the framework that the control has new outputs ready to be retrieved asynchronously.
      * @param _state A piece of data that persists in one session for a single user. Can be set at any point in a controls life cycle by calling 'setControlState' in the Mode interface.
      */
-    public init(
+    public async init(
         context: ComponentFramework.Context<IInputs>,
         _notifyOutputChanged: () => void,
         _state: ComponentFramework.Dictionary
-    ): void {
+    ): Promise<void> {
         const contextObj: any = context;
         stateData.entity = contextObj.client._customControlProperties.pageType === 'EntityList' ?
             (contextObj.page?.entityTypeName ?? '') : (contextObj.client._customControlProperties.descriptor.Parameters?.TargetEntityType ?? '');
 
         const environmentVariableName = 'Grid Customizer';
-        context.webAPI.retrieveMultipleRecords("environmentvariabledefinition", `?$filter=displayname eq '${environmentVariableName}'&$select=environmentvariabledefinitionid&$expand=environmentvariabledefinition_environmentvariablevalue($select=value)`)
-            .then(result => {
-                var current = result && result.entities ? result.entities[0] : {};
-                var value = current['environmentvariabledefinition_environmentvariablevalue'] ? current['environmentvariabledefinition_environmentvariablevalue'][0].value : null;
-                var models: SettingModel[] = value ? JSON.parse(value) : [];
-                stateData.Settings = models.filter(e => e.entity == stateData.entity);
-            });
+        const result = await context.webAPI.retrieveMultipleRecords("environmentvariabledefinition", `?$filter=displayname eq '${environmentVariableName}'&$select=environmentvariabledefinitionid&$expand=environmentvariabledefinition_environmentvariablevalue($select=value)`);
+        const current = result && result.entities ? result.entities[0] : {};
+        const value = current['environmentvariabledefinition_environmentvariablevalue'] ? current['environmentvariabledefinition_environmentvariablevalue'][0].value : null;
+        const models: SettingModel[] = value ? JSON.parse(value) : [];
+        const filterSetting = models.filter(e => e.entity == stateData.entity);
+        stateData.Setting = filterSetting.length > 0 ? filterSetting[0] : { entity: '', attributes: [] };
+
         const eventName = context.parameters.EventName.raw;
         if (eventName) {
             const paOneGridCustomizer: PAOneGridCustomizer = { cellRendererOverrides, cellEditorOverrides };

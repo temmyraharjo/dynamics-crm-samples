@@ -32,8 +32,9 @@ export const cellEditorOverrides: CellEditorOverrides = {
     ["UniqueIdentifier"]: (props: CellEditorProps, col: GetEditorParams) => renderControl(props, col)
 }
 
-function renderControl(_props: CellEditorProps, col: GetEditorParams) {
-    if (stateData.Settings.length > 0 && stateData.Settings[0].attributes.indexOf(col.colDefs[col.columnIndex].name.toLowerCase()) > -1) {
+function renderControl(props: CellEditorProps, col: GetEditorParams) {
+    const columnName = col.colDefs[col.columnIndex].name.toLowerCase();
+    if (stateData.Setting.attributes.length > 0 && stateData.Setting.attributes.indexOf(columnName) > -1) {
         col.stopEditing(true);
     }
 
